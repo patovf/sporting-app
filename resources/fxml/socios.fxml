@@ -14,12 +14,12 @@
             <children>
                 <AnchorPane fx:id="nuevoSocio_form" layoutX="54.0" layoutY="44.0" prefHeight="433.0" prefWidth="794.0" styleClass="card" stylesheets="@../css/sociosDesign.css">
                     <children>
-                        <Button fx:id="nuevoSocio_crearBtn" layoutX="652.0" layoutY="385.0" mnemonicParsing="false" styleClass="crearBtn" stylesheets="@sociosDesign.css" text="Agregar socio" textFill="WHITE">
+                        <Button fx:id="nuevoSocio_crearBtn" layoutX="652.0" layoutY="385.0" mnemonicParsing="false" styleClass="crearBtn" stylesheets="@../css/sociosDesign.css" text="Agregar socio" textFill="WHITE">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>
                         </Button>
-                        <Button fx:id="nuevoSocio_cancelarBtn" layoutX="562.0" layoutY="385.0" mnemonicParsing="false" styleClass="cancelarBtn" stylesheets="@sociosDesign.css" text="Cancelar" textFill="WHITE">
+                        <Button fx:id="nuevoSocio_cancelarBtn" layoutX="562.0" layoutY="385.0" mnemonicParsing="false" styleClass="cancelarBtn" stylesheets="@../css/sociosDesign.css" text="Cancelar" textFill="WHITE">
                             <font>
                                 <Font name="System Bold" size="14.0" />
                             </font>

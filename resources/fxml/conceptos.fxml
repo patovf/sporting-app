@@ -28,7 +28,7 @@
                             <columns>
                                 <TableColumn fx:id="conceptos_tablaNombre" prefWidth="265.0" text="Nombre" />
                                 <TableColumn fx:id="conceptos_tablaDescripcion" prefWidth="376.0" text="Descripción" />
-                                <TableColumn prefWidth="149.0" text="Costo" />
+                                <TableColumn fx:id="conceptos_tablaCosto" prefWidth="149.0" text="Costo" />
                             </columns>
                         </TableView>
                         <Label layoutX="29.0" layoutY="11.0" text="Conceptos">

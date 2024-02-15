@@ -17,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -26,6 +27,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import sportingapplication.config.database;
 import sportingapplication.models.Concepto;
+import sportingapplication.models.dto.ConceptoDto;
 
 /**
  *
@@ -57,6 +59,9 @@ public class conceptosController implements Initializable {
     private TableColumn<Concepto, String> conceptos_tablaDescripcion;
     
     @FXML
+    private TableColumn<Concepto, Double> conceptos_tablaCosto;
+    
+    @FXML
     private Button conceptos_agregarBtn;
     
     // --- AGREGAR CONCEPTO ---
@@ -78,8 +83,23 @@ public class conceptosController implements Initializable {
     
     // --- EDITAR CONCEPTO ---
     
-        @FXML
-    private Button conceptos_editarBtn;
+    @FXML
+    private TextField editarConcepto_id;
+    
+    @FXML
+    private TextField editarConcepto_nombre;
+
+    @FXML
+    private TextField editarConcepto_descripcion;
+
+    @FXML
+    private TextField editarConcepto_costo;
+
+    @FXML
+    private Button editarConcepto_editarBtn;
+
+    @FXML
+    private Button editarConcepto_cancelarBtn;
         
     // --- ELIMINAR CONCEPTO ---
 
@@ -91,7 +111,16 @@ public class conceptosController implements Initializable {
     private ResultSet result;
     private Statement statement;
 
-    //private AlertMessage alert = new AlertMessage();
+    private Alert alert;
+    
+    public void showAlert(Alert.AlertType type, String title, String headerText, String contentText) {
+        alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.setContentText(contentText);
+        alert.showAndWait();
+    }
+
 
     public ObservableList<Concepto> getConceptos() {
         ObservableList<Concepto> list = FXCollections.observableArrayList();
@@ -131,7 +160,8 @@ public class conceptosController implements Initializable {
         
             conceptos_tablaNombre.setCellValueFactory(new PropertyValueFactory<>("name"));
             conceptos_tablaDescripcion.setCellValueFactory(new PropertyValueFactory<>("description"));
-
+            conceptos_tablaCosto.setCellValueFactory(new PropertyValueFactory<>("price"));
+            
             conceptos_tabla.setItems(conceptoList);
         } catch (Exception e) {
             e.printStackTrace();
@@ -146,7 +176,6 @@ public class conceptosController implements Initializable {
     
     public void displayFormCreateConcepto() {
         try {
-            System.out.print("click crear concepto");
             Parent root = FXMLLoader.load(getClass().getResource("/sportingapplication/resources/fxml/agregarConcepto.fxml"));
         
             Stage stage = new Stage();
@@ -176,9 +205,89 @@ public class conceptosController implements Initializable {
         }
     }
     
+    public void displayFormUpdateConcepto() {
+        try {
+            Concepto concepto = conceptos_tabla.getSelectionModel().getSelectedItem();
+            int num = conceptos_tabla.getSelectionModel().getSelectedIndex();
+            
+            if (concepto != null) {
+                if ((num - 1) < -1) {
+                    showAlert(Alert.AlertType.ERROR, "Error", null, "Debe seleccionar la fila a editar");
+                    return;
+                } else {
+                    ConceptoDto.id = concepto.getId();
+                    ConceptoDto.name = concepto.getName();
+                    ConceptoDto.description = concepto.getDescription();
+                    ConceptoDto.price = concepto.getPrice();
+                
+                    Parent root = FXMLLoader.load(getClass().getResource("/sportingapplication/resources/fxml/editarConcepto.fxml"));
+        
+                    Stage stage = new Stage();
+                    stage.setScene(new Scene(root));
+            
+                    stage.show();
+                    
+//                    setData();
+                }
+            } else {
+                showAlert(Alert.AlertType.ERROR, "Error", null, "Debe seleccionar la fila a editar");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void editConcepto() {
+        try {
+            String query = "UPDATE concepto SET name = " + editarConcepto_nombre.getText() + ", "
+                    + "description = " + editarConcepto_descripcion.getText() + ", "
+                    + "price = " + editarConcepto_costo.getText() + " "
+                    + "WHERE id = " + editarConcepto_id.getText() + "";
+                    
+            connect = database.connectDB();
+            prepare = connect.prepareStatement(query);
+            
+            prepare.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void setData() {
+        try {        
+            String query = "SELECT * FROM concepto WHERE id = " + ConceptoDto.id + ";";
+        
+            Concepto concepto;
+
+            connect = database.connectDB();
+        
+            prepare = connect.prepareStatement(query);
+            result = prepare.executeQuery();
+            
+            if (result.next()) {
+                editarConcepto_id.setText(result.getString("id"));
+                editarConcepto_nombre.setText(result.getString("name"));
+                editarConcepto_descripcion.setText(result.getString("description"));
+                editarConcepto_costo.setText(result.getString("price"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void displayFormDeleteConcepto() {
+        try {
+
+        } catch (Exception e) { 
+            e.printStackTrace();
+        }
+    }
+    
     @Override
     public void initialize(URL location, ResourceBundle resources) {
             displayConceptos();
+            setData();
     }
     
     

@@ -32,7 +32,7 @@ public class Concepto {
         this.name = name;
         this.description = description;
         this.price = price;
-         this.active = active;
+        this.active = active;
         this.createdAt = createdAt;
         this.modifiedAt = modifiedAt;
 
