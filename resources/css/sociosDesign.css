@@ -1,0 +1,33 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jul 26, 2023, 8:36:46 PM
+    Author     : Paulina Vaira
+*/
+
+
+.card {
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5,0,0,0);
+    -fx-background-radius: 3px;
+}
+
+.crearBtn {
+    -fx-background-color: #FF2021;
+    -fx-cursor: hand;
+}
+
+.crearBtn:hover {
+    -fx-background-color: #DDD;
+}
+
+.cancelarBtn {
+    -fx-background-color: #DDD;
+    -fx-cursor: hand;
+}
+
+.cancelarBtn:hover {
+    -fx-background-color: #FF2021;
+}

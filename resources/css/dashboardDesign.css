@@ -1,0 +1,66 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : Jul 18, 2023, 8:04:32 PM
+    Author     : Paulina Vaira
+*/
+
+.top-form {
+    -fx-background-color: #FF2021;
+    -fx-border-color:#D7DFE1;
+    -fx-border-width: .4px .4px .4px .4px;
+}
+
+.semi-top-form {
+    -fx-background-color: #FF2021;
+    -fx-border-color:#440000;
+    -fx-border-width: .4px .4px .4px .4px;
+}
+
+.close {
+    -fx-background-color: #FFFFFF;
+    -fx-cursor: hand;
+}
+
+.close:hover {
+    -fx-background-color: #FF4F6C;
+}
+
+.minimize {
+    -fx-background-color: #FFFFFF;
+    -fx-cursor: hand;
+}
+
+.minimize:hover {
+    -fx-background-color: #DDD;
+}
+
+.nav-form {
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 5,0,0,0);
+}
+
+.logout {
+    -fx-background-color: #FF2021;
+    -fx-cursor: hand;
+}
+
+.logout:hover {
+    -fx-background-color: #DDD;
+}
+
+.card {
+    -fx-background-color: #FFFFFF;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 5,0,0,0);
+    -fx-background-radius: 3px;
+}
+
+.table-view {
+    -fx-background-radius: 5px;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: #FF2021;
+}
