@@ -17,7 +17,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -28,6 +27,7 @@ import javafx.stage.Stage;
 import sportingapplication.config.database;
 import sportingapplication.models.Concepto;
 import sportingapplication.models.dto.ConceptoDto;
+import sportingapplication.models.AlertMessage;
 
 /**
  *
@@ -111,20 +111,11 @@ public class conceptosController implements Initializable {
     private ResultSet result;
     private Statement statement;
 
-    private Alert alert;
-    
-    public void showAlert(Alert.AlertType type, String title, String headerText, String contentText) {
-        alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(headerText);
-        alert.setContentText(contentText);
-        alert.showAndWait();
-    }
-
+    private AlertMessage alert = new AlertMessage();
 
     public ObservableList<Concepto> getConceptos() {
         ObservableList<Concepto> list = FXCollections.observableArrayList();
-        String query = "SELECT * FROM concepto";
+        String query = "SELECT * FROM concepto WHERE active = ?";
         
         Concepto concepto;
 
@@ -132,7 +123,10 @@ public class conceptosController implements Initializable {
             connect = database.connectDB();
         
             prepare = connect.prepareStatement(query);
+            prepare.setString(1, String.valueOf(1));
             result = prepare.executeQuery();
+            
+            list.clear();
             
             while(result.next()) {
                 concepto = new Concepto(result.getInt("id"),
@@ -158,11 +152,14 @@ public class conceptosController implements Initializable {
         try {
             conceptoList = getConceptos();
         
-            conceptos_tablaNombre.setCellValueFactory(new PropertyValueFactory<>("name"));
-            conceptos_tablaDescripcion.setCellValueFactory(new PropertyValueFactory<>("description"));
-            conceptos_tablaCosto.setCellValueFactory(new PropertyValueFactory<>("price"));
-            
-            conceptos_tabla.setItems(conceptoList);
+            if (conceptos_tablaNombre != null) {
+                conceptos_tablaNombre.setCellValueFactory(new PropertyValueFactory<>("name"));
+                conceptos_tablaDescripcion.setCellValueFactory(new PropertyValueFactory<>("description"));
+                conceptos_tablaCosto.setCellValueFactory(new PropertyValueFactory<>("price"));
+                
+                conceptos_tabla.setItems(conceptoList);
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -200,10 +197,20 @@ public class conceptosController implements Initializable {
             prepare.setBoolean(4, true);
             
             prepare.executeUpdate();
+
+            alert.successMessage("Concepto creado correctamente!");
+            
+            conceptos_tabla.refresh();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+    
+    /*
+    *
+    *   EDITAR CONCEPTO
+    *
+    */
     
     public void displayFormUpdateConcepto() {
         try {
@@ -212,7 +219,7 @@ public class conceptosController implements Initializable {
             
             if (concepto != null) {
                 if ((num - 1) < -1) {
-                    showAlert(Alert.AlertType.ERROR, "Error", null, "Debe seleccionar la fila a editar");
+                    alert.errorMessage("Debe seleccionar la fila a editar");
                     return;
                 } else {
                     ConceptoDto.id = concepto.getId();
@@ -230,7 +237,7 @@ public class conceptosController implements Initializable {
 //                    setData();
                 }
             } else {
-                showAlert(Alert.AlertType.ERROR, "Error", null, "Debe seleccionar la fila a editar");
+                alert.errorMessage("Debe seleccionar la fila a editar");
             }
 
         } catch (Exception e) {
@@ -240,15 +247,76 @@ public class conceptosController implements Initializable {
     
     public void editConcepto() {
         try {
-            String query = "UPDATE concepto SET name = " + editarConcepto_nombre.getText() + ", "
-                    + "description = " + editarConcepto_descripcion.getText() + ", "
+            if (alert.confirmMessage("Está seguro de que desea editar este concepto?")) {
+                String query = "UPDATE concepto SET name = '" + editarConcepto_nombre.getText() + "', "
+                    + "description = '" + editarConcepto_descripcion.getText() + "', "
                     + "price = " + editarConcepto_costo.getText() + " "
-                    + "WHERE id = " + editarConcepto_id.getText() + "";
+                    + "WHERE id = " + ConceptoDto.id + "";
+                
+                System.out.println(query);
                     
-            connect = database.connectDB();
-            prepare = connect.prepareStatement(query);
+                connect = database.connectDB();
+                prepare = connect.prepareStatement(query);
             
-            prepare.executeUpdate();
+                prepare.executeUpdate();
+                
+                alert.successMessage("Concepto editado correctamente!");
+                
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    /*
+    *
+    *   ELIMINAR CONCEPTO
+    *
+    */
+    
+    public void displayDeleteConcepto() {
+        try {
+            Concepto concepto = conceptos_tabla.getSelectionModel().getSelectedItem();
+            int num = conceptos_tabla.getSelectionModel().getSelectedIndex();
+            
+            if (concepto != null) {
+                if ((num - 1) < -1) {
+                    alert.errorMessage("Debe seleccionar la fila a eliminar");
+                    return;
+                } else {
+                    ConceptoDto.id = concepto.getId();
+                    ConceptoDto.name = concepto.getName();
+                    ConceptoDto.description = concepto.getDescription();
+                    ConceptoDto.price = concepto.getPrice();
+                    
+                deleteConcepto();
+                }
+            } else {
+                alert.errorMessage("Debe seleccionar la fila a eliminar");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    public void deleteConcepto() {
+        try {
+            if (alert.confirmMessage("Está seguro de que desea eliminar este concepto?")) {
+                String query = "UPDATE concepto SET active = ? WHERE id = ?";
+                connect = database.connectDB();
+                prepare = connect.prepareStatement(query);
+            
+                prepare.setString(1, String.valueOf(0));
+                prepare.setString(2, String.valueOf(ConceptoDto.id));
+                
+                prepare.executeUpdate();
+                
+                alert.successMessage("Concepto eliminado correctamente!");
+                
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

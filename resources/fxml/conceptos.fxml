@@ -46,7 +46,7 @@
                      <Font name="System Bold" size="14.0" />
                   </font>
                </Button>
-               <Button fx:id="conceptos_eliminarBtn" layoutX="563.0" layoutY="9.0" mnemonicParsing="false" onAction="#displayFormDeleteConcepto" prefHeight="30.0" prefWidth="79.0" styleClass="crearBtn" stylesheets="@../css/conceptosDesign.css" text="Eliminar" textFill="WHITE">
+               <Button fx:id="conceptos_eliminarBtn" layoutX="563.0" layoutY="9.0" mnemonicParsing="false" onAction="#displayDeleteConcepto" prefHeight="30.0" prefWidth="79.0" styleClass="crearBtn" stylesheets="@../css/conceptosDesign.css" text="Eliminar" textFill="WHITE">
                   <font>
                      <Font name="System Bold" size="14.0" />
                   </font>
