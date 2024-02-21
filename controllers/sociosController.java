@@ -92,22 +92,22 @@ public class sociosController implements Initializable {
     private AnchorPane socios_tablaVista;
 
     @FXML
-    private TableView<?> socios_tabla;
+    private TableView<Socio> socios_tabla;
 
     @FXML
-    private TableColumn<?, ?> socios_tablaSocioID;
+    private TableColumn<Concepto, Integer> socios_tablaSocioID;
 
     @FXML
-    private TableColumn<?, ?> socios_tablaNombre;
+    private TableColumn<Concepto, String> socios_tablaNombre;
 
     @FXML
-    private TableColumn<?, ?> socios_tablaApellido;
+    private TableColumn<Concepto, String> socios_tablaApellido;
 
     @FXML
-    private TableColumn<?, ?> socios_tablaFechaAlta;
+    private TableColumn<Concepto, Date> socios_tablaFechaAlta;
 
     @FXML
-    private TableColumn<?, ?> socios_tablaSede;
+    private TableColumn<Concepto, String> socios_tablaSede;
 
     @FXML
     private Button socios_agregarBtn;
@@ -136,11 +136,7 @@ public class sociosController implements Initializable {
     public void imprimirRecibo() {
         
     }
-    
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        listaCabezaFamilia();
-    }
+   
 
     public void switchToSocios(boolean value) {
         socios_panel.setVisible(value);
@@ -287,29 +283,29 @@ public class sociosController implements Initializable {
         }
     }
     
-//    public void editSocio() {
-//        try {
-//            if (alert.confirmMessage("Está seguro de que desea editar este socio?")) {
-//                String query = "UPDATE socio SET firstname = '" + editarConcepto_nombre.getText() + "', "
-//                    + "description = '" + editarConcepto_descripcion.getText() + "', "
-//                    + "price = " + editarConcepto_costo.getText() + " "
-//                    + "WHERE id = " + ConceptoDto.id + "";
-//                
-//                System.out.println(query);
-//                    
-//                connect = database.connectDB();
-//                prepare = connect.prepareStatement(query);
-//            
-//                prepare.executeUpdate();
-//                
-//                alert.successMessage("Concepto editado correctamente!");
-//                
-//            }
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    public void editSocio() {
+        try {
+            if (alert.confirmMessage("Está seguro de que desea editar este socio?")) {
+                String query = "UPDATE socio SET firstname = '" + editarSocio_nombre.getText() + "', "
+                    + "lastname = '" + editarSocio_apellido.getText() + "', "
+                    + "sede = " + editarSocio_sede.getText() + " "
+                    + "WHERE id = " + SocioDto.id + "";
+                
+                System.out.println(query);
+                    
+                connect = database.connectDB();
+                prepare = connect.prepareStatement(query);
+            
+                prepare.executeUpdate();
+                
+                alert.successMessage("Socio editado correctamente!");
+                
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     
     /*
     *
@@ -317,22 +313,22 @@ public class sociosController implements Initializable {
     *
     */
     
-    public void displayDeleteConcepto() {
+    public void displayDeleteSocio() {
         try {
-            Concepto concepto = conceptos_tabla.getSelectionModel().getSelectedItem();
-            int num = conceptos_tabla.getSelectionModel().getSelectedIndex();
+            Socio socio = socios_tabla.getSelectionModel().getSelectedItem();
+            int num = socios_tabla.getSelectionModel().getSelectedIndex();
             
-            if (concepto != null) {
+            if (socio != null) {
                 if ((num - 1) < -1) {
                     alert.errorMessage("Debe seleccionar la fila a eliminar");
                     return;
                 } else {
-                    ConceptoDto.id = concepto.getId();
-                    ConceptoDto.name = concepto.getName();
-                    ConceptoDto.description = concepto.getDescription();
-                    ConceptoDto.price = concepto.getPrice();
+                    SocioDto.id = socio.getId();
+                    SocioDto.firstname = socio.getFirstname();
+                    SocioDto.lastname = socio.getLastname();
+                    SocioDto.sede = socio.getSede();
                     
-                deleteConcepto();
+                deleteSocio();
                 }
             } else {
                 alert.errorMessage("Debe seleccionar la fila a eliminar");
@@ -343,19 +339,19 @@ public class sociosController implements Initializable {
         }
     }
     
-    public void deleteConcepto() {
+    public void deleteSocio() {
         try {
-            if (alert.confirmMessage("Está seguro de que desea eliminar este concepto?")) {
-                String query = "UPDATE concepto SET active = ? WHERE id = ?";
+            if (alert.confirmMessage("Está seguro de que desea eliminar este socio?")) {
+                String query = "UPDATE socio SET active = ? WHERE id = ?";
                 connect = database.connectDB();
                 prepare = connect.prepareStatement(query);
             
                 prepare.setString(1, String.valueOf(0));
-                prepare.setString(2, String.valueOf(ConceptoDto.id));
+                prepare.setString(2, String.valueOf(SocioDto.id));
                 
                 prepare.executeUpdate();
                 
-                alert.successMessage("Concepto eliminado correctamente!");
+                alert.successMessage("Socio eliminado correctamente!");
                 
             }
 
@@ -366,9 +362,9 @@ public class sociosController implements Initializable {
     
     public void setData() {
         try {        
-            String query = "SELECT * FROM concepto WHERE id = " + ConceptoDto.id + ";";
+            String query = "SELECT * FROM socio WHERE id = " + SocioDto.id + ";";
         
-            Concepto concepto;
+            Socio socio;
 
             connect = database.connectDB();
         
@@ -376,10 +372,10 @@ public class sociosController implements Initializable {
             result = prepare.executeQuery();
             
             if (result.next()) {
-                editarConcepto_id.setText(result.getString("id"));
-                editarConcepto_nombre.setText(result.getString("name"));
-                editarConcepto_descripcion.setText(result.getString("description"));
-                editarConcepto_costo.setText(result.getString("price"));
+                editarSocio_id.setText(result.getString("id"));
+                editarSocio_nombre.setText(result.getString("firstname"));
+                editarSocio_apellido.setText(result.getString("lastname"));
+                editarSocio_sede.setText(result.getString("sede"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -396,7 +392,8 @@ public class sociosController implements Initializable {
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-            displayConceptos();
+            displaySocios();
+            listaCabezaFamilia();
             setData();
     }
 
