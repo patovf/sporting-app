@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -30,6 +31,7 @@ import javafx.stage.Stage;
 import sportingapplication.config.database;
 import sportingapplication.models.AlertMessage;
 import sportingapplication.models.Concepto;
+import sportingapplication.models.Sede;
 import sportingapplication.models.Socio;
 import sportingapplication.models.dto.ConceptoDto;
 import sportingapplication.models.dto.SocioDto;
@@ -41,52 +43,13 @@ import sportingapplication.models.dto.SocioDto;
 public class sociosController implements Initializable {
     
     @FXML
-    private AnchorPane nuevoSocio_panel;
-
-    @FXML
-    private AnchorPane nuevoSocio_form;
-
-    @FXML
-    private Button nuevoSocio_crearBtn;
-
-    @FXML
-    private Button nuevoSocio_cancelarBtn;
-
-    @FXML
-    private TextField nuevoSocio_socioID;
-
-    @FXML
-    private TextField nuevoSocio_nombre;
-
-    @FXML
-    private TextField nuevoSocio_apellido;
-
-    @FXML
-    private TextField nuevoSocio_sede;
-
-    @FXML
-    private ComboBox<?> nuevoSocio_cabezaFamilia;
-
-    @FXML
-    private ComboBox<?> nuevoSocio_perteneceFamilia;
-
-    @FXML
     private AnchorPane socios_panel;
 
     @FXML
     private AnchorPane socios_filtros;
 
     @FXML
-    private TextField socios_filtroSocioID;
-
-    @FXML
     private TextField socios_filtroNombre;
-
-    @FXML
-    private TextField socios_filtroApellido;
-
-    @FXML
-    private TextField socios_filtroSede;
 
     @FXML
     private AnchorPane socios_tablaVista;
@@ -95,25 +58,69 @@ public class sociosController implements Initializable {
     private TableView<Socio> socios_tabla;
 
     @FXML
-    private TableColumn<Concepto, Integer> socios_tablaSocioID;
+    private TableColumn<Socio, String> socios_tablaSocioId;
 
     @FXML
-    private TableColumn<Concepto, String> socios_tablaNombre;
+    private TableColumn<Socio, String> socios_tablaNombre;
 
     @FXML
-    private TableColumn<Concepto, String> socios_tablaApellido;
+    private TableColumn<Socio, String> socios_tablaApellido;
 
     @FXML
-    private TableColumn<Concepto, Date> socios_tablaFechaAlta;
-
-    @FXML
-    private TableColumn<Concepto, String> socios_tablaSede;
+    private TableColumn<Socio, String> socios_tablaSede;
 
     @FXML
     private Button socios_agregarBtn;
+
+    @FXML
+    private Button socios_editarBtn;
+
+
+    // --- AGREGAR SOCIO ---
     
-    private String[] yesOrNo = {"Si", "No"};
+    @FXML
+    private TextField nuevoSocio_nombre;
+
+    @FXML
+    private TextField nuevoSocio_apellido;
+
+    @FXML
+    private Button nuevoSocio_crearBtn;
+
+    @FXML
+    private Button nuevoSocio_cancelarBtn;
+
+    @FXML
+    private TextField nuevoSocio_socioId;
+
+    @FXML
+    private ComboBox<Sede> nuevoSocio_sede;
     
+    // --- EDITAR SOCIO ---
+    
+    @FXML
+    private TextField editarSocio_nombre;
+
+    @FXML
+    private TextField editarSocio_apellido;
+
+    @FXML
+    private Button editarSocio_editarBtn;
+
+    @FXML
+    private Button editarSocio_cancelarBtn;
+
+    @FXML
+    private TextField editarSocio_socioId;
+
+    @FXML
+    private ComboBox<Sede> editarSocio_sede;
+    
+    // --- ELIMINAR SOCIO ---
+    
+    @FXML
+    private Button socios_eliminarBtn;
+
     private Connection connect;
     private PreparedStatement prepare;
     private ResultSet result;
@@ -121,29 +128,12 @@ public class sociosController implements Initializable {
     
     private AlertMessage alert = new AlertMessage();
     
-    public void listaCabezaFamilia() {
-        List<String> listOptions = new ArrayList<>();
-        
-        for(String data: yesOrNo) {
-            listOptions.add(data);
-        }
-        
-        ObservableList observableList = FXCollections.observableArrayList(listOptions);
-        
-        nuevoSocio_cabezaFamilia.setItems(observableList);
-    }
-    
     public void imprimirRecibo() {
         
     }
    
-
     public void switchToSocios(boolean value) {
         socios_panel.setVisible(value);
-    }
-   
-    public void switchToNuevoSocio() {
-        nuevoSocio_panel.setVisible(true);
     }
     
     public ObservableList<Socio> getSocios() {
@@ -189,9 +179,10 @@ public class sociosController implements Initializable {
             socioList = getSocios();
         
             if (socios_tablaNombre != null) {
+                socios_tablaSocioId.setCellValueFactory(new PropertyValueFactory<>("socioId"));
                 socios_tablaNombre.setCellValueFactory(new PropertyValueFactory<>("firstname"));
                 socios_tablaApellido.setCellValueFactory(new PropertyValueFactory<>("lastname"));
-                socios_tablaFechaAlta.setCellValueFactory(new PropertyValueFactory<>("registratedAt"));
+                socios_tablaSede.setCellValueFactory(new PropertyValueFactory<>("sede"));
                 
                 socios_tabla.setItems(socioList);
             }
@@ -222,17 +213,20 @@ public class sociosController implements Initializable {
     
     public void createSocio() {
         try {
-            String query = "INSERT INTO socio (socioId, firstname, lastname, sede, familyId, registratedAt, active) VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO socio (socioId, firstname, lastname, registratedAt, active) VALUES (?, ?, ?, ?, ?, ?)";
                     
             connect = database.connectDB();
             prepare = connect.prepareStatement(query);
-
-            // TODO: AGREGAR PROPIEDADES FALTANTES
             
-            prepare.setString(1, nuevoSocio_nombre.getText());
-            prepare.setString(2, nuevoSocio_apellido.getText());
-            prepare.setString(3, nuevoSocio_sede.getText());
-            prepare.setBoolean(4, true);
+            Date date = new Date();
+
+            // TODO: AGREGAR SEDE (LISTA)
+            prepare.setString(1, nuevoSocio_socioId.getText());            
+            prepare.setString(2, nuevoSocio_nombre.getText());
+            prepare.setString(3, nuevoSocio_apellido.getText());
+            //prepare.setString(4, nuevoSocio_sede.);
+            prepare.setString(4, date.toString());
+            prepare.setBoolean(5, true);
             
             prepare.executeUpdate();
 
@@ -288,7 +282,7 @@ public class sociosController implements Initializable {
             if (alert.confirmMessage("Está seguro de que desea editar este socio?")) {
                 String query = "UPDATE socio SET firstname = '" + editarSocio_nombre.getText() + "', "
                     + "lastname = '" + editarSocio_apellido.getText() + "', "
-                    + "sede = " + editarSocio_sede.getText() + " "
+                    //+ "sede = " + editarSocio_sede.getText() + " "
                     + "WHERE id = " + SocioDto.id + "";
                 
                 System.out.println(query);
@@ -372,10 +366,10 @@ public class sociosController implements Initializable {
             result = prepare.executeQuery();
             
             if (result.next()) {
-                editarSocio_id.setText(result.getString("id"));
+                editarSocio_socioId.setText(result.getString("id"));
                 editarSocio_nombre.setText(result.getString("firstname"));
                 editarSocio_apellido.setText(result.getString("lastname"));
-                editarSocio_sede.setText(result.getString("sede"));
+                //editarSocio_sede.setText(result.getString("sede"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -393,7 +387,6 @@ public class sociosController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
             displaySocios();
-            listaCabezaFamilia();
             setData();
     }
 
