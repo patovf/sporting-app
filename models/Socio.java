@@ -27,7 +27,6 @@ public class Socio {
             String firstname, 
             String lastname, 
             String sede,
-            Integer familyId,
             boolean active,
             Date registratedAt,
             Date createdAt, 
@@ -38,7 +37,6 @@ public class Socio {
         this.firstname = firstname;
         this.lastname = lastname;
         this.sede = sede;
-        this.familyId = familyId;
         this.active = active;
         this.registratedAt = registratedAt;
         this.createdAt = createdAt;
@@ -84,14 +82,6 @@ public class Socio {
 
     public void setSede(String sede) {
         this.sede = sede;
-    }
-
-    public Integer getFamilyId() {
-        return familyId;
-    }
-
-    public void setFamilyId(Integer familyId) {
-        this.familyId = familyId;
     }
 
     public boolean isActive() {

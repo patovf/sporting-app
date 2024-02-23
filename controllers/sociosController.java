@@ -94,7 +94,7 @@ public class sociosController implements Initializable {
     private TextField nuevoSocio_socioId;
 
     @FXML
-    private ComboBox<Sede> nuevoSocio_sede;
+    private ComboBox<String> nuevoSocio_sede;
     
     // --- EDITAR SOCIO ---
     
@@ -114,7 +114,7 @@ public class sociosController implements Initializable {
     private TextField editarSocio_socioId;
 
     @FXML
-    private ComboBox<Sede> editarSocio_sede;
+    private ComboBox<String> editarSocio_sede;
     
     // --- ELIMINAR SOCIO ---
     
@@ -157,7 +157,6 @@ public class sociosController implements Initializable {
                 result.getString("firstname"),
                 result.getString("lastname"),
                 result.getString("sede"),
-                result.getInt("family_id"),
                 result.getBoolean("active"),
      result.getDate("registrated_at"),
                 result.getDate("created_at"),
@@ -213,7 +212,7 @@ public class sociosController implements Initializable {
     
     public void createSocio() {
         try {
-            String query = "INSERT INTO socio (socioId, firstname, lastname, registratedAt, active) VALUES (?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO socio (socio_id, firstname, lastname, registrated_at, active) VALUES (?, ?, ?, ?, ?)";
                     
             connect = database.connectDB();
             prepare = connect.prepareStatement(query);
@@ -224,8 +223,8 @@ public class sociosController implements Initializable {
             prepare.setString(1, nuevoSocio_socioId.getText());            
             prepare.setString(2, nuevoSocio_nombre.getText());
             prepare.setString(3, nuevoSocio_apellido.getText());
-            //prepare.setString(4, nuevoSocio_sede.);
-            prepare.setString(4, date.toString());
+            prepare.setString(4, nuevoSocio_sede.getSelectionModel().getSelectedItem());
+//            prepare.setString(5, date.);
             prepare.setBoolean(5, true);
             
             prepare.executeUpdate();
@@ -282,7 +281,7 @@ public class sociosController implements Initializable {
             if (alert.confirmMessage("Está seguro de que desea editar este socio?")) {
                 String query = "UPDATE socio SET firstname = '" + editarSocio_nombre.getText() + "', "
                     + "lastname = '" + editarSocio_apellido.getText() + "', "
-                    //+ "sede = " + editarSocio_sede.getText() + " "
+                    + "sede = " + editarSocio_sede.getSelectionModel().getSelectedItem() + " "
                     + "WHERE id = " + SocioDto.id + "";
                 
                 System.out.println(query);
@@ -369,11 +368,23 @@ public class sociosController implements Initializable {
                 editarSocio_socioId.setText(result.getString("id"));
                 editarSocio_nombre.setText(result.getString("firstname"));
                 editarSocio_apellido.setText(result.getString("lastname"));
-                //editarSocio_sede.setText(result.getString("sede"));
+                editarSocio_sede.getSelectionModel().select(result.getString("sede"));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    public void sedeList() {
+        List<String> list = new ArrayList<>();
+        
+        for (String data: Sede.sede) {
+            list.add(data);
+        }
+        
+        ObservableList listData = FXCollections.observableArrayList(list);
+        //nuevoSocio_sede.setItems(listData);
+        //editarSocio_sede.setItems(listData);
     }
     
     public void displayFormDeleteConcepto() {
@@ -386,6 +397,7 @@ public class sociosController implements Initializable {
     
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+            sedeList();
             displaySocios();
             setData();
     }
