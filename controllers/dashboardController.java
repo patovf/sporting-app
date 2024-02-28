@@ -4,8 +4,11 @@
  */
 package sportingapplication.controllers;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -72,8 +75,6 @@ public class dashboardController implements Initializable {
 
     @FXML
     private Button menu_reportesBtn;
-    
-    private sociosController sociosController;
 
     public void close() {
         System.exit(0);
@@ -90,15 +91,50 @@ public class dashboardController implements Initializable {
     }
     
     public void switchForm(ActionEvent event) {
+         System.out.println("caoigo 1");
+         
+         // PANEL INICIO
+         
+         // PANEL CONFIGURACIONES
+                     
+            FXMLLoader sociosLoader = new FXMLLoader();
+            sociosLoader.setLocation(getClass().getResource("/sportingapplication/resources/fxml/socios.fxml"));
+             try {
+                 Parent sociosRoot = sociosLoader.load();
+             } catch (IOException ex) {
+                 Logger.getLogger(dashboardController.class.getName()).log(Level.SEVERE, null, ex);
+             }
+            sociosController sociosController = sociosLoader.getController();
+            System.out.print("click socios");
+            
+            
+
+         // PANEL SOCIOS
+
+                     
+            FXMLLoader conceptosLoader = new FXMLLoader();
+            conceptosLoader.setLocation(getClass().getResource("/sportingapplication/resources/fxml/conceptos.fxml"));
+             try {
+                 Parent conceptosRoot = conceptosLoader.load();
+             } catch (IOException ex) {
+                 Logger.getLogger(dashboardController.class.getName()).log(Level.SEVERE, null, ex);
+             }
+            conceptosController conceptosController = conceptosLoader.getController();
+            System.out.print("click conceptos");
+            
+         
         if (event.getSource() == menu_inicioBtn) {
             System.out.print("click inicio");
             
         } else if (event.getSource() == menu_sociosBtn) {
-            System.out.print("click socios");
-            //sociosController.switchToSocios(true);
+            sociosController.switchToSocios(true);
+            conceptosController.switchToConceptos(false);
         } else if (event.getSource() == menu_configuracionesBtn) {
-            System.out.print("click configuraciones");            
+            sociosController.switchToSocios(false);
+            conceptosController.switchToConceptos(true);
+            
         } else if (event.getSource() == menu_reportesBtn) {
+            
             System.out.print("click reportes");
         }
     }

@@ -133,7 +133,12 @@ public class sociosController implements Initializable {
     }
    
     public void switchToSocios(boolean value) {
-        socios_panel.setVisible(value);
+        try {
+            System.out.println("asd");
+            socios_panel.setVisible(value);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
     public ObservableList<Socio> getSocios() {

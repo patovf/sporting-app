@@ -112,7 +112,15 @@ public class conceptosController implements Initializable {
     private Statement statement;
 
     private AlertMessage alert = new AlertMessage();
-
+    
+    public void switchToConceptos(boolean value) {
+        try {
+            System.out.println("asd");
+            conceptos_panel.setVisible(value);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     public ObservableList<Concepto> getConceptos() {
         ObservableList<Concepto> list = FXCollections.observableArrayList();
         String query = "SELECT * FROM concepto WHERE active = ?";

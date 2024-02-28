@@ -95,8 +95,8 @@
                      <children>
                         <AnchorPane prefHeight="552.0" prefWidth="901.0">
                            <children>
-                              <fx:include source="conceptos.fxml" />
-                              <fx:include source="socios.fxml" />
+                              <fx:include fx:id="conceptos_panel" source="conceptos.fxml" />
+                              <fx:include fx:id="socios_panel" source="socios.fxml" />
                            </children>
                         </AnchorPane>
                      </children>
