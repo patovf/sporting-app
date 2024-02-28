@@ -16,6 +16,8 @@ public class SocioDto {
     public static String firstname;
     public static String lastname;
     public static String sede;
+    public static Integer familiaId;
+    public static Integer esCabezaFamilia;
     public static boolean active;
     public static Date registratedAt;
     public static Date createdAt;

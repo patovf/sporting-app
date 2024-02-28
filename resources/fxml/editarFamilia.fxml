@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="editarFamilia_tableView" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" stylesheets="@../css/conceptosDesign.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sportingapplication.controllers.conceptosController">
+        <AnchorPane fx:id="conceptos_panel" prefHeight="564.0" prefWidth="900.0" stylesheets="@../css/conceptosDesign.css">
+            <children>
+                <AnchorPane fx:id="conceptos_filtros" layoutX="34.0" layoutY="25.0" prefHeight="118.0" prefWidth="833.0" styleClass="card" stylesheets="@../css/conceptosDesign.css" AnchorPane.bottomAnchor="402.0" AnchorPane.leftAnchor="34.0" AnchorPane.topAnchor="25.0">
+                    <children>
+                        <Label layoutX="23.0" layoutY="14.0" text="Editar familia">
+                            <font>
+                                <Font name="System Bold" size="16.0" />
+                            </font>
+                        </Label>
+               <TextField fx:id="editarFamilia_nombre" layoutX="52.0" layoutY="69.0" prefHeight="25.0" prefWidth="204.0" />
+               <ComboBox fx:id="editarFamilia_socioCabecera" layoutX="315.0" layoutY="69.0" prefHeight="25.0" prefWidth="204.0" />
+               <Label layoutX="315.0" layoutY="46.0" text="Socio cabecera" />
+                    </children>
+                </AnchorPane>
+                <AnchorPane fx:id="conceptos_tablaVista" layoutX="34.0" layoutY="184.0" prefHeight="320.0" prefWidth="399.0" styleClass="card" stylesheets="@../css/conceptosDesign.css" AnchorPane.rightAnchor="467.0">
+                    <children>
+                        <Label layoutX="22.0" layoutY="17.0" text="Socios">
+                            <font>
+                                <Font name="System Bold" size="16.0" />
+                            </font>
+                        </Label>
+                        <Button fx:id="editarFamilia_agregarSocioBtn" layoutX="301.0" layoutY="14.0" mnemonicParsing="false" onAction="#displayFormCreateConcepto" prefHeight="30.0" prefWidth="79.0" styleClass="crearBtn" stylesheets="@../css/conceptosDesign.css" text="Agregar" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Button>
+               <Button fx:id="editarFamilia_eliminarSocioBtn" layoutX="213.0" layoutY="14.0" mnemonicParsing="false" onAction="#displayDeleteConcepto" prefHeight="30.0" prefWidth="79.0" styleClass="crearBtn" stylesheets="@../css/conceptosDesign.css" text="Eliminar" textFill="WHITE">
+                  <font>
+                     <Font name="System Bold" size="14.0" />
+                  </font>
+               </Button>
+               <TableView fx:id="editarFamilia_tablaSocios" layoutX="22.0" layoutY="60.0" prefHeight="233.0" prefWidth="358.0">
+                  <columns>
+                     <TableColumn fx:id="editarFamilia_tablaSociosSocioID" prefWidth="75.0" text="ID Socio" />
+                     <TableColumn fx:id="editarFamilia_tablaSociosNombre" prefWidth="137.0" text="Nombre" />
+                     <TableColumn fx:id="editarFamilia_tablaSociosApellido" prefWidth="144.0" text="Apellido" />
+                  </columns>
+               </TableView>
+                    </children>
+                </AnchorPane>
+         <AnchorPane fx:id="conceptos_tablaVista1" layoutX="468.0" layoutY="184.0" prefHeight="320.0" prefWidth="399.0" styleClass="card" stylesheets="@../css/conceptosDesign.css">
+            <children>
+               <Label layoutX="21.0" layoutY="17.0" text="Conceptos">
+                  <font>
+                     <Font name="System Bold" size="16.0" />
+                  </font>
+               </Label>
+               <Button fx:id="editarFamilia_agregarConceptoBtn" layoutX="300.0" layoutY="14.0" mnemonicParsing="false" onAction="#displayFormCreateConcepto" prefHeight="30.0" prefWidth="79.0" styleClass="crearBtn" stylesheets="@../css/conceptosDesign.css" text="Agregar" textFill="WHITE">
+                  <font>
+                     <Font name="System Bold" size="14.0" />
+                  </font>
+               </Button>
+               <Button fx:id="editarFamilia_eliminarConceptoBtn" layoutX="212.0" layoutY="15.0" mnemonicParsing="false" onAction="#displayDeleteConcepto" prefHeight="30.0" prefWidth="79.0" styleClass="crearBtn" stylesheets="@../css/conceptosDesign.css" text="Eliminar" textFill="WHITE">
+                  <font>
+                     <Font name="System Bold" size="14.0" />
+                  </font>
+               </Button>
+               <TableView fx:id="editarFamilia_tablaConceptos" layoutX="21.0" layoutY="57.0" prefHeight="233.0" prefWidth="358.0">
+                  <columns>
+                     <TableColumn fx:id="editarFamilia_tablaConceptosDescripcion" prefWidth="255.0" text="Descripción" />
+                     <TableColumn fx:id="editarFamilia_tablaConceptosPrecio" prefWidth="102.0" text="Precio" />
+                  </columns>
+               </TableView>
+            </children>
+         </AnchorPane>
+         <Button fx:id="editarFamilia_guardarBtn" layoutX="769.0" layoutY="514.0" mnemonicParsing="false" onAction="#displayFormUpdateConcepto" prefHeight="30.0" prefWidth="80.0" styleClass="crearBtn" stylesheets="@../css/conceptosDesign.css" text="Guardar" textFill="WHITE">
+            <font>
+               <Font name="System Bold" size="14.0" />
+            </font>
+         </Button>
+            </children>
+        </AnchorPane>
+   <Label layoutX="87.0" layoutY="69.0" text="Nombre" />
+</AnchorPane>
