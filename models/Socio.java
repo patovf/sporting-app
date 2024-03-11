@@ -16,7 +16,7 @@ public class Socio {
     private String firstname;
     private String lastname;
     private String sede;
-    private Integer familiaId;
+    private Integer idFamilia;
     private Integer esCabezaFamilia;
     private boolean active;
     private Date registratedAt;
@@ -28,7 +28,7 @@ public class Socio {
             String firstname, 
             String lastname, 
             String sede,
-            Integer familiaId,
+            Integer idFamilia,
             Integer esCabezaFamilia,
             boolean active,
             Date registratedAt,
@@ -40,7 +40,7 @@ public class Socio {
         this.firstname = firstname;
         this.lastname = lastname;
         this.sede = sede;
-        this.familiaId = familiaId;
+        this.idFamilia = idFamilia;
         this.esCabezaFamilia = esCabezaFamilia;
         this.active = active;
         this.registratedAt = registratedAt;
@@ -121,12 +121,12 @@ public class Socio {
         this.modifiedAt = modifiedAt;
     }
 
-    public Integer getFamiliaId() {
-        return familiaId;
+    public Integer getIdFamilia() {
+        return idFamilia;
     }
 
-    public void setFamiliaId(Integer familiaId) {
-        this.familiaId = familiaId;
+    public void setIdFamilia(Integer idFamilia) {
+        this.idFamilia = idFamilia;
     }
 
     public Integer getEsCabezaFamilia() {

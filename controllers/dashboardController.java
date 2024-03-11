@@ -31,6 +31,25 @@ public class dashboardController implements Initializable {
     @FXML
     private AnchorPane ventanaApp;
     
+    // EMPIEZAN SECCIONES
+    
+    @FXML
+    private AnchorPane inicio_panel;
+    
+    @FXML
+    private AnchorPane socios_panel;
+        
+    @FXML
+    private AnchorPane conceptos_panel;
+    
+    @FXML
+    private AnchorPane familias_panel;
+    
+    @FXML
+    private AnchorPane reportes_panel;
+    
+    // TERMINAN SECCIONES
+    
     @FXML
     private AnchorPane menu_barraSuperior;
 
@@ -71,7 +90,10 @@ public class dashboardController implements Initializable {
     private Button menu_sociosBtn;
 
     @FXML
-    private Button menu_configuracionesBtn;
+    private Button menu_conceptosBtn;
+    
+    @FXML
+    private Button menu_familiasBtn;
 
     @FXML
     private Button menu_reportesBtn;
@@ -91,51 +113,94 @@ public class dashboardController implements Initializable {
     }
     
     public void switchForm(ActionEvent event) {
-         System.out.println("caoigo 1");
          
-         // PANEL INICIO
-         
-         // PANEL CONFIGURACIONES
+        // PANEL INICIO
+        
+        FXMLLoader inicioLoader = new FXMLLoader();
+        inicioLoader.setLocation(getClass().getResource("/sportingapplication/resources/fxml/inicio.fxml"));
+        try {
+            Parent inicioRoot = inicioLoader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(dashboardController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        inicioController inicioController = inicioLoader.getController();
+        
+        // PANEL SOCIOS
                      
-            FXMLLoader sociosLoader = new FXMLLoader();
-            sociosLoader.setLocation(getClass().getResource("/sportingapplication/resources/fxml/socios.fxml"));
-             try {
-                 Parent sociosRoot = sociosLoader.load();
-             } catch (IOException ex) {
-                 Logger.getLogger(dashboardController.class.getName()).log(Level.SEVERE, null, ex);
-             }
-            sociosController sociosController = sociosLoader.getController();
-            System.out.print("click socios");
-            
-            
+        FXMLLoader sociosLoader = new FXMLLoader();
+        sociosLoader.setLocation(getClass().getResource("/sportingapplication/resources/fxml/socios.fxml"));
+        try {
+            Parent sociosRoot = sociosLoader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(dashboardController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        sociosController sociosController = sociosLoader.getController();
 
-         // PANEL SOCIOS
+        // PANEL CONFIGURACIONES
 
-                     
-            FXMLLoader conceptosLoader = new FXMLLoader();
-            conceptosLoader.setLocation(getClass().getResource("/sportingapplication/resources/fxml/conceptos.fxml"));
-             try {
-                 Parent conceptosRoot = conceptosLoader.load();
-             } catch (IOException ex) {
-                 Logger.getLogger(dashboardController.class.getName()).log(Level.SEVERE, null, ex);
-             }
-            conceptosController conceptosController = conceptosLoader.getController();
-            System.out.print("click conceptos");
-            
+        FXMLLoader conceptosLoader = new FXMLLoader();
+        conceptosLoader.setLocation(getClass().getResource("/sportingapplication/resources/fxml/conceptos.fxml"));
+        try {
+            Parent conceptosRoot = conceptosLoader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(dashboardController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        conceptosController conceptosController = conceptosLoader.getController();
+        
+        // PANEL FAMILIAS
          
+        FXMLLoader familiasLoader = new FXMLLoader();
+        familiasLoader.setLocation(getClass().getResource("/sportingapplication/resources/fxml/familias.fxml"));
+        try {
+            Parent familiasRoot = familiasLoader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(dashboardController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        familiasController familiasController = familiasLoader.getController();
+            
+        // PANEL REPORTES
+         
+        FXMLLoader reportesLoader = new FXMLLoader();
+        reportesLoader.setLocation(getClass().getResource("/sportingapplication/resources/fxml/reportes.fxml"));
+        try {
+            Parent reportesRoot = reportesLoader.load();
+        } catch (IOException ex) {
+            Logger.getLogger(dashboardController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        reportesController reportesController = reportesLoader.getController();
+            
+        // MUESTRA DE PANELES
+        
         if (event.getSource() == menu_inicioBtn) {
-            System.out.print("click inicio");
-            
+            inicio_panel.setVisible(true);
+            socios_panel.setVisible(false);
+            conceptos_panel.setVisible(false);
+            familias_panel.setVisible(false);
+            reportes_panel.setVisible(false);
         } else if (event.getSource() == menu_sociosBtn) {
-            sociosController.switchToSocios(true);
-            conceptosController.switchToConceptos(false);
-        } else if (event.getSource() == menu_configuracionesBtn) {
-            sociosController.switchToSocios(false);
-            conceptosController.switchToConceptos(true);
-            
+            inicio_panel.setVisible(false);
+            socios_panel.setVisible(true);
+            conceptos_panel.setVisible(false);
+            familias_panel.setVisible(false);
+            reportes_panel.setVisible(false);
+        } else if (event.getSource() == menu_conceptosBtn) {
+            inicio_panel.setVisible(false);
+            socios_panel.setVisible(false);
+            conceptos_panel.setVisible(true);
+            familias_panel.setVisible(false);
+            reportes_panel.setVisible(false);
+        } else if (event.getSource() == menu_familiasBtn) {
+            inicio_panel.setVisible(false);
+            socios_panel.setVisible(false);
+            conceptos_panel.setVisible(false);
+            familias_panel.setVisible(true);
+            reportes_panel.setVisible(false);
         } else if (event.getSource() == menu_reportesBtn) {
-            
-            System.out.print("click reportes");
+            inicio_panel.setVisible(false);
+            socios_panel.setVisible(false);
+            conceptos_panel.setVisible(false);
+            familias_panel.setVisible(false);
+            reportes_panel.setVisible(true);
         }
     }
 }

@@ -85,8 +85,9 @@
                         <Line fx:id="menu_separador" endX="75.0" layoutX="103.0" layoutY="283.0" startX="-79.0" stroke="#b9b9b9" />
                         <Button fx:id="menu_inicioBtn" layoutX="78.0" layoutY="282.0" mnemonicParsing="false" onAction="#switchForm" text="Inicio" />
                         <Button fx:id="menu_sociosBtn" layoutX="75.0" layoutY="332.0" mnemonicParsing="false" onAction="#switchForm" text="Socios" />
-                        <Button fx:id="menu_configuracionesBtn" layoutX="53.0" layoutY="414.0" mnemonicParsing="false" onAction="#switchForm" text="Configuraciones" />
-                        <Button fx:id="menu_reportesBtn" layoutX="68.0" layoutY="377.0" mnemonicParsing="false" onAction="#switchForm" text="Reportes" />
+                        <Button fx:id="menu_conceptosBtn" layoutX="65.0" layoutY="377.0" mnemonicParsing="false" onAction="#switchForm" text="Conceptos" />
+                        <Button fx:id="menu_reportesBtn" layoutX="68.0" layoutY="456.0" mnemonicParsing="false" onAction="#switchForm" text="Reportes" />
+                        <Button fx:id="menu_familiasBtn" layoutX="72.0" layoutY="419.0" mnemonicParsing="false" onAction="#switchForm" text="Familias" />
                      </children>
                   </AnchorPane>
                </left>
@@ -95,8 +96,11 @@
                      <children>
                         <AnchorPane prefHeight="552.0" prefWidth="901.0">
                            <children>
-                              <fx:include fx:id="conceptos_panel" source="conceptos.fxml" />
+                              <fx:include fx:id="inicio_panel" source="inicio.fxml" />
                               <fx:include fx:id="socios_panel" source="socios.fxml" />
+                              <fx:include fx:id="conceptos_panel" source="conceptos.fxml" />
+                              <fx:include fx:id="familias_panel" source="familias.fxml" />
+                              <fx:include fx:id="reportes_panel" source="reportes.fxml" />
                            </children>
                         </AnchorPane>
                      </children>

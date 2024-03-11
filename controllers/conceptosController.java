@@ -115,7 +115,7 @@ public class conceptosController implements Initializable {
     
     public void switchToConceptos(boolean value) {
         try {
-            System.out.println("asd");
+            System.out.println("ver conceptos");
             conceptos_panel.setVisible(value);
         } catch (Exception e) {
             e.printStackTrace();
@@ -206,9 +206,8 @@ public class conceptosController implements Initializable {
             
             prepare.executeUpdate();
 
+            this.displayConceptos();
             alert.successMessage("Concepto creado correctamente!");
-            
-            conceptos_tabla.refresh();
         } catch (Exception e) {
             e.printStackTrace();
         }

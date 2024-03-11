@@ -134,8 +134,9 @@ public class sociosController implements Initializable {
    
     public void switchToSocios(boolean value) {
         try {
-            System.out.println("asd");
+            System.out.println("ver socios");
             socios_panel.setVisible(value);
+            socios_panel.setManaged(value);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -162,6 +163,8 @@ public class sociosController implements Initializable {
                 result.getString("firstname"),
                 result.getString("lastname"),
                 result.getString("sede"),
+                result.getInt("id_familia"),
+                result.getInt("es_cabeza_familia"),
                 result.getBoolean("active"),
      result.getDate("registrated_at"),
                 result.getDate("created_at"),
@@ -170,7 +173,7 @@ public class sociosController implements Initializable {
                 list.add(socio);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         
         return list;

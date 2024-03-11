@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="inicio_panel" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" stylesheets="@../css/conceptosDesign.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sportingapplication.controllers.inicioController">
+        <AnchorPane fx:id="inicio_panel_sec" prefHeight="564.0" prefWidth="900.0" stylesheets="@../css/conceptosDesign.css">
+            <children>
+                <AnchorPane fx:id="inicio_cabecera" layoutX="34.0" layoutY="25.0" prefHeight="118.0" prefWidth="833.0" styleClass="card" stylesheets="@../css/conceptosDesign.css" AnchorPane.bottomAnchor="402.0" AnchorPane.leftAnchor="34.0" AnchorPane.topAnchor="25.0">
+                    <children>
+                        <Label layoutX="23.0" layoutY="14.0" text="Inicio">
+                            <font>
+                                <Font name="System Bold" size="16.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </AnchorPane>
+                <AnchorPane fx:id="inicio_cuerpo" layoutX="33.0" layoutY="174.0" prefHeight="371.0" prefWidth="834.0" styleClass="card" stylesheets="@../css/conceptosDesign.css" AnchorPane.rightAnchor="33.0">
+                    <children>
+                        <Label layoutX="29.0" layoutY="11.0" text="Socios">
+                            <font>
+                                <Font name="System Bold" size="16.0" />
+                            </font>
+                        </Label>
+               <TableView layoutX="445.0" layoutY="48.0" prefHeight="303.0" prefWidth="367.0">
+                 <columns>
+                   <TableColumn prefWidth="75.0" text="Fútbol" />
+                   <TableColumn prefWidth="75.0" text="Básquet" />
+                 </columns>
+               </TableView>
+               <Label layoutX="445.0" layoutY="11.0" text="Socios por concepto">
+                  <font>
+                     <Font name="System Bold" size="16.0" />
+                  </font>
+               </Label>
+               <TableView layoutX="29.0" layoutY="48.0" prefHeight="303.0" prefWidth="367.0">
+                 <columns>
+                   <TableColumn prefWidth="75.0" text="C1" />
+                   <TableColumn prefWidth="75.0" text="C2" />
+                 </columns>
+               </TableView>
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+</AnchorPane>

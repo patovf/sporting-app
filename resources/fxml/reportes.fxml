@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" fx:id="reportes_panel" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" stylesheets="@../css/conceptosDesign.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sportingapplication.controllers.reportesController">
+        <AnchorPane fx:id="reportes_panel_sec" prefHeight="564.0" prefWidth="900.0" stylesheets="@../css/conceptosDesign.css">
+            <children>
+                <AnchorPane fx:id="reportes_filtros" layoutX="34.0" layoutY="25.0" prefHeight="118.0" prefWidth="833.0" styleClass="card" stylesheets="@../css/conceptosDesign.css" AnchorPane.bottomAnchor="402.0" AnchorPane.leftAnchor="34.0" AnchorPane.topAnchor="25.0">
+                    <children>
+                        <Label layoutX="23.0" layoutY="14.0" text="Filtros">
+                            <font>
+                                <Font name="System Bold" size="16.0" />
+                            </font>
+                        </Label>
+                        <TextField fx:id="reportes_filtroNombre" layoutX="33.0" layoutY="72.0" />
+                        <Label layoutX="33.0" layoutY="51.0" text="Nombre" />
+                    </children>
+                </AnchorPane>
+                <AnchorPane fx:id="reportes_tablaVista" layoutX="33.0" layoutY="174.0" prefHeight="371.0" prefWidth="834.0" styleClass="card" stylesheets="@../css/conceptosDesign.css" AnchorPane.rightAnchor="33.0">
+                    <children>
+                        <TableView fx:id="reportes_tabla" layoutX="21.0" layoutY="49.0" prefHeight="304.0" prefWidth="791.0">
+                            <columns>
+                                <TableColumn fx:id="reportes_tablaSocioId" prefWidth="105.0" text="ID Socio" />
+                                <TableColumn fx:id="reportes_tablaNombre" prefWidth="169.0" text="Nombre" />
+                                <TableColumn fx:id="reportes_tablaApellido" minWidth="5.0" prefWidth="234.0" text="Apellido" />
+                     <TableColumn fx:id="reportes_tablaSede" prefWidth="282.0" text="Sede" />
+                            </columns>
+                        </TableView>
+                        <Label layoutX="29.0" layoutY="11.0" text="Reportes">
+                            <font>
+                                <Font name="System Bold" size="16.0" />
+                            </font>
+                        </Label>
+                        <Button fx:id="reportes_exportarRecibosBtn" layoutX="733.0" layoutY="9.0" mnemonicParsing="false" onAction="#exportRecibos" prefHeight="30.0" prefWidth="79.0" styleClass="crearBtn" stylesheets="@../css/conceptosDesign.css" text="Exportar" textFill="WHITE">
+                            <font>
+                                <Font name="System Bold" size="14.0" />
+                            </font>
+                        </Button>
+                    </children>
+                </AnchorPane>
+            </children>
+        </AnchorPane>
+</AnchorPane>

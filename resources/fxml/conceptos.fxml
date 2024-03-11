@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" stylesheets="@../css/conceptosDesign.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sportingapplication.controllers.conceptosController">
+<AnchorPane id="AnchorPane" fx:id="conceptos_panel" prefHeight="400.0" prefWidth="600.0" styleClass="mainFxmlClass" stylesheets="@../css/conceptosDesign.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sportingapplication.controllers.conceptosController">
         <AnchorPane fx:id="conceptos_panel" prefHeight="564.0" prefWidth="900.0" stylesheets="@../css/conceptosDesign.css">
             <children>
                 <AnchorPane fx:id="conceptos_filtros" layoutX="34.0" layoutY="25.0" prefHeight="118.0" prefWidth="833.0" styleClass="card" stylesheets="@../css/conceptosDesign.css" AnchorPane.bottomAnchor="402.0" AnchorPane.leftAnchor="34.0" AnchorPane.topAnchor="25.0">
